@@ -71,19 +71,17 @@ stage('Install Dependencies') {
                     sh 'npm run test:coverage'
                 }
             }
-            post {
-                always {
-                    echo "Publishing unit test reports..."
-                    junit testResults: '**/coverage/test-results.xml',
-                          skipPublishingChecks: true,
-                          allowEmptyResults: true
+post {
+    always {
+        echo "Publishing unit test reports..."
+        junit testResults: 'reports/junit.xml',
+              skipPublishingChecks: true,
+              allowEmptyResults: true
 
-                    publishCoverage adapters: [
-                        coberturaAdapter('coverage/cobertura-coverage.xml')
-                    ],
-                    sourceFileResolver: sourceFiles('STORE_LAST_BUILD')
-                }
-            }
+        archiveArtifacts artifacts: 'coverage/**',
+                          allowEmptyArchive: true
+    }
+}
         }
 
         stage('E2E Tests') {
