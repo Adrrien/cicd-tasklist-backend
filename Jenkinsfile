@@ -101,28 +101,24 @@ post {
             }
         }
 
-        stage('SonarQube Analysis') {
-            steps {
-                script {
-                    echo "Running SonarQube analysis..."
-                    withSonarQubeEnv('sonarqube') {
-                        withCredentials([string(credentialsId: env.SONAR_CREDENTIALS_ID, variable: 'SONAR_TOKEN')]) {
-                            sh '''
-                                sonar-scanner \
-                                  -Dsonar.projectKey=${SONAR_PROJECT_KEY} \
-                                  -Dsonar.sources=src \
-                                  -Dsonar.tests=src/__tests__ \
-                                  -Dsonar.test.inclusions=src/__tests__/**/*.test.ts \
-                                  -Dsonar.javascript.lcov.reportPaths=coverage/lcov.info \
-                                  -Dsonar.sourceEncoding=UTF-8 \
-                                  -Dsonar.host.url=${SONAR_HOST_URL} \
-                                  -Dsonar.token=${SONAR_TOKEN}
-                            '''
-                        }
-                    }
-                }
+stage('SonarQube Analysis') {
+    steps {
+        script {
+            echo "Running SonarQube analysis..."
+            withSonarQubeEnv('sonarqube') {
+                sh '''
+                    npx sonarqube-scanner \
+                      -Dsonar.projectKey=${SONAR_PROJECT_KEY} \
+                      -Dsonar.sources=src \
+                      -Dsonar.tests=src/__tests__ \
+                      -Dsonar.test.inclusions=src/__tests__/**/*.test.ts \
+                      -Dsonar.javascript.lcov.reportPaths=coverage/lcov.info \
+                      -Dsonar.sourceEncoding=UTF-8
+                '''
             }
         }
+    }
+}
 
         stage('SonarQube Quality Gate') {
             steps {
