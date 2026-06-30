@@ -37,14 +37,15 @@ pipeline {
             }
         }
 
-        stage('Install Dependencies') {
-            steps {
-                script {
-                    echo "Installing dependencies with npm ci..."
-                    sh 'npm ci'
-                }
-            }
+stage('Install Dependencies') {
+    steps {
+        script {
+            echo "Installing dependencies with npm ci..."
+            sh 'npm cache clean --force'
+            sh 'npm ci'
         }
+    }
+}
 
         stage('Generate Prisma Client') {
             steps {
