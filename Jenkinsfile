@@ -8,7 +8,7 @@ pipeline {
 
         SONAR_HOST_URL = "https://sonarqube.cicd.kits.ext.educentre.fr"
         SONAR_CREDENTIALS_ID = "adrrien-sonar-token"
-        SONAR_PROJECT_KEY = "tasklist-backend"
+        SONAR_PROJECT_KEY = "adrrien-tasklist-backend"
 
         BUILD_TAG = "${env.BUILD_NUMBER}"
         IMAGE_TAG = "${DOCKER_IMAGE_NAME}:${BUILD_TAG}"
