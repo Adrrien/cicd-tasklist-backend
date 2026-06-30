@@ -105,7 +105,7 @@ post {
             steps {
                 script {
                     echo "Running SonarQube analysis..."
-                    withSonarQubeEnv('SonarQube') {
+                    withSonarQubeEnv('sonarqube') {
                         withCredentials([string(credentialsId: env.SONAR_CREDENTIALS_ID, variable: 'SONAR_TOKEN')]) {
                             sh '''
                                 sonar-scanner \
